@@ -6,6 +6,12 @@ export interface VicreoTimerView {
 	showQlabPlayhead?: boolean
 }
 
+export interface VicreoTimerPreset {
+	durationMs?: number
+	isCustom?: boolean
+	label?: string
+}
+
 export interface VicreoTimer {
 	id: string
 	type: string
@@ -24,6 +30,7 @@ export interface VicreoTimer {
 	currentTimelineName?: string
 	watchoutCueName?: string
 	watchoutTimelineName?: string
+	presets?: VicreoTimerPreset[]
 	view: VicreoTimerView
 }
 

@@ -19,6 +19,13 @@ export function UpdateVariableDefinitions(self: ModuleInstance): void {
 		{ variableId: 'selected_timer_visible', name: 'Selected timer visible on output (YES/NO)' },
 	]
 
+	for (let preset = 1; preset <= 4; preset++) {
+		variables.push({
+			variableId: `selected_timer_preset_${preset}_label`,
+			name: `Selected timer preset ${preset} label`,
+		})
+	}
+
 	for (let slot = 1; slot <= MAX_TIMER_SLOTS; slot++) {
 		variables.push({ variableId: `timer_${slot}_id`, name: `Timer ${slot} id` })
 		variables.push({ variableId: `timer_${slot}_title`, name: `Timer ${slot} title` })
@@ -56,6 +63,10 @@ export function UpdateVariableValues(self: ModuleInstance): void {
 		selected_timer_value: safeString(selected?.value),
 		selected_timer_running: boolLabel(Boolean(selected?.isRunning)),
 		selected_timer_visible: boolLabel(Boolean(selected?.view?.showOnOutput)),
+	}
+
+	for (let preset = 1; preset <= 4; preset++) {
+		values[`selected_timer_preset_${preset}_label`] = safeString(selected?.presets?.[preset - 1]?.label)
 	}
 
 	for (let slot = 1; slot <= MAX_TIMER_SLOTS; slot++) {

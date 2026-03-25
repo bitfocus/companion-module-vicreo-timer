@@ -18,6 +18,8 @@ The VICREO Timer app must be running for the REST API and SSE stream to be avail
 - Control the active timer: start, pause, reset, show, hide, duplicate, move, delete
 - Send keypad input to the active timer
 - Adjust the active timer by `+1 minute` or `-1 minute`
+- Recall countdown preset slots `1-4` on the active timer
+- Save the current countdown duration back into preset slots `1-4` on the active timer
 - Set message timer text
 - Create timers and apply patch-style timer updates
 - Reorder timers by ID list
@@ -32,6 +34,7 @@ The module publishes variables for:
 
 - Global state such as connection info, timer count, blackout, and output visibility
 - The currently selected timer, sourced from the app state / SSE stream
+- Selected countdown preset labels `1-4`
 - Timer slots `1-20`, including timer id, title, value, running state, visibility, and related timer state
 
 ## Selection Model
@@ -45,6 +48,7 @@ The module publishes variables for:
 Included preset categories:
 
 - `Selected Timer`: start, pause, reset, show, hide, `+1 minute`, `-1 minute`
+- `Selected Timer`: also includes recall preset `1-4` and save preset `1-4` for countdown timers
 - `Selected Timer Keypad`: digits `0-9`, `Backspace`, `Enter`, `Escape`
 - `Timer Select`: select timer slots
 - `Global`: pause all, reset all, show output window, hide output window, blackout on, blackout off

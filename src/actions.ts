@@ -110,6 +110,54 @@ export function UpdateActions(self: ModuleInstance): void {
 				})
 			},
 		},
+		timer_apply_preset: {
+			name: 'Recall active timer preset',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'index',
+					label: 'Preset slot',
+					default: 1,
+					choices: [
+						{ id: 1, label: 'Preset 1' },
+						{ id: 2, label: 'Preset 2' },
+						{ id: 3, label: 'Preset 3' },
+						{ id: 4, label: 'Preset 4' },
+					],
+				},
+			],
+			callback: async (event) => {
+				const timer = self.getFocusedTimer()
+				if (!timer) return
+				await self.sendTimerAction(timer.id, 'preset', {
+					index: Number(event.options.index),
+				})
+			},
+		},
+		timer_save_preset: {
+			name: 'Save active timer preset',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'index',
+					label: 'Preset slot',
+					default: 1,
+					choices: [
+						{ id: 1, label: 'Preset 1' },
+						{ id: 2, label: 'Preset 2' },
+						{ id: 3, label: 'Preset 3' },
+						{ id: 4, label: 'Preset 4' },
+					],
+				},
+			],
+			callback: async (event) => {
+				const timer = self.getFocusedTimer()
+				if (!timer) return
+				await self.sendTimerAction(timer.id, 'save-preset', {
+					index: Number(event.options.index),
+				})
+			},
+		},
 		timer_show: {
 			name: 'Show timer on output',
 			options: [],

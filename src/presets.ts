@@ -217,6 +217,37 @@ export function GetPresetDefinitions(_self: ModuleInstance): CompanionPresetDefi
 		},
 	}
 
+	for (let preset = 1; preset <= 4; preset++) {
+		presets[`focused_recall_preset_${preset}`] = {
+			type: 'button',
+			category: 'Selected Timer',
+			name: `Recall Preset ${preset}`,
+			style: {
+				text: `\`P${preset}\\n\${$(${MODULE_ID}:selected_timer_preset_${preset}_label) || "Preset ${preset}"}\``,
+				size: '14',
+				color: combineRgb(255, 255, 255),
+				bgcolor: combineRgb(60, 90, 170),
+				textExpression: true,
+			},
+			steps: step('timer_apply_preset', { index: preset }),
+			feedbacks: [],
+		}
+
+		presets[`focused_save_preset_${preset}`] = {
+			type: 'button',
+			category: 'Selected Timer',
+			name: `Save Preset ${preset}`,
+			style: {
+				text: `SAVE\\nP${preset}`,
+				size: '14',
+				color: combineRgb(255, 255, 255),
+				bgcolor: combineRgb(130, 70, 20),
+			},
+			steps: step('timer_save_preset', { index: preset }),
+			feedbacks: [],
+		}
+	}
+
 	for (let digit = 0; digit <= 9; digit++) {
 		presets[`key_${digit}`] = {
 			type: 'button',
