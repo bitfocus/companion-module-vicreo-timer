@@ -4,8 +4,6 @@ import { boolLabel, safeString } from './utils.js'
 
 export function UpdateVariableDefinitions(self: ModuleInstance): void {
 	const variables = [
-		{ variableId: 'api_base_url', name: 'API base URL' },
-		{ variableId: 'api_host', name: 'API host' },
 		{ variableId: 'api_port', name: 'API port' },
 		{ variableId: 'timer_count', name: 'Timer count' },
 		{ variableId: 'output_window_visible', name: 'Output window visible (YES/NO)' },
@@ -50,8 +48,6 @@ export function UpdateVariableValues(self: ModuleInstance): void {
 	const selected = self.getFocusedTimer()
 	const selectedSlot = selected ? self.getTimerSlotById(selected.id) : 0
 	const values: Record<string, string | number> = {
-		api_base_url: safeString(state.server?.baseUrl),
-		api_host: safeString(state.server?.host),
 		api_port: state.server?.port ?? self.config.port,
 		timer_count: state.timers.length,
 		output_window_visible: boolLabel(Boolean(state.outputWindow?.visible)),
