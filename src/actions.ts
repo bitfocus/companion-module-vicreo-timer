@@ -156,7 +156,7 @@ export function UpdateActions(self: ModuleInstance): void {
 			},
 		},
 		timer_show: {
-			name: 'Show timer on output',
+			name: 'Show timer on second screen',
 			options: [],
 			callback: async () => {
 				const timer = self.getFocusedTimer()
@@ -164,7 +164,7 @@ export function UpdateActions(self: ModuleInstance): void {
 			},
 		},
 		timer_hide: {
-			name: 'Hide timer from output',
+			name: 'Hide timer from second screen',
 			options: [],
 			callback: async () => {
 				const timer = self.getFocusedTimer()
@@ -251,7 +251,7 @@ export function UpdateActions(self: ModuleInstance): void {
 				{
 					type: 'checkbox',
 					id: 'showOnOutput',
-					label: 'Show on output',
+					label: 'Show on second screen',
 					default: true,
 				},
 			],
@@ -402,7 +402,7 @@ export function UpdateActions(self: ModuleInstance): void {
 				{
 					type: 'checkbox',
 					id: 'showOnOutput',
-					label: 'Show on output',
+					label: 'Show on second screen',
 					default: true,
 				},
 				{
@@ -490,7 +490,7 @@ export function UpdateActions(self: ModuleInstance): void {
 			},
 		},
 		set_output_window_visibility: {
-			name: 'Set output window visibility',
+			name: 'Set second screen visibility',
 			options: [
 				{
 					type: 'dropdown',
@@ -498,8 +498,8 @@ export function UpdateActions(self: ModuleInstance): void {
 					label: 'Visible',
 					default: 'true',
 					choices: [
-						{ id: 'true', label: 'Show output window' },
-						{ id: 'false', label: 'Hide output window' },
+						{ id: 'true', label: 'Show second screen' },
+						{ id: 'false', label: 'Hide second screen' },
 					],
 				},
 			],

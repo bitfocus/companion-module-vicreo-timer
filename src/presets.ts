@@ -70,9 +70,9 @@ export function GetPresetDefinitions(_self: ModuleInstance): CompanionPresetDefi
 		output_show: {
 			type: 'button',
 			category: 'Global',
-			name: 'Show Output Window',
+			name: 'Show Second Screen',
 			style: {
-				text: 'SHOW\\nOUTPUT',
+				text: 'SHOW\\n2ND',
 				size: '18',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 90, 180),
@@ -92,9 +92,9 @@ export function GetPresetDefinitions(_self: ModuleInstance): CompanionPresetDefi
 		output_hide: {
 			type: 'button',
 			category: 'Global',
-			name: 'Hide Output Window',
+			name: 'Hide Second Screen',
 			style: {
-				text: 'HIDE\\nOUTPUT',
+				text: 'HIDE\\n2ND',
 				size: '18',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(110, 20, 20),
@@ -244,6 +244,41 @@ export function GetPresetDefinitions(_self: ModuleInstance): CompanionPresetDefi
 			`$(${MODULE_ID}:selected_timer_value)`,
 			combineRgb(60, 60, 60),
 		),
+		selected_timer_current_variable: {
+			type: 'button',
+			category: 'Selected Timer Variables',
+			name: 'Selected Timer Current Variable',
+			style: {
+				text: `\`T\${$(${MODULE_ID}:selected_timer_slot) || "-"}\\n\${$(${MODULE_ID}:selected_timer_title) || "No Timer"}\``,
+				size: '14',
+				color: combineRgb(255, 255, 255),
+				bgcolor: combineRgb(85, 55, 120),
+				textExpression: true,
+			},
+			steps: [],
+			feedbacks: [],
+		},
+		selected_timer_hours_variable: variablePreset(
+			'Selected Timer Variables',
+			'Selected Timer Hours Variable',
+			`HH\\n$(${MODULE_ID}:selected_timer_hours)`,
+			combineRgb(50, 70, 120),
+			'14',
+		),
+		selected_timer_minutes_variable: variablePreset(
+			'Selected Timer Variables',
+			'Selected Timer Minutes Variable',
+			`MM\\n$(${MODULE_ID}:selected_timer_minutes)`,
+			combineRgb(50, 100, 80),
+			'14',
+		),
+		selected_timer_seconds_variable: variablePreset(
+			'Selected Timer Variables',
+			'Selected Timer Seconds Variable',
+			`SS\\n$(${MODULE_ID}:selected_timer_seconds)`,
+			combineRgb(120, 70, 40),
+			'14',
+		),
 	}
 
 	for (let preset = 1; preset <= TIMER_PRESET_SLOTS; preset++) {
@@ -252,7 +287,7 @@ export function GetPresetDefinitions(_self: ModuleInstance): CompanionPresetDefi
 			category: 'Selected Timer',
 			name: `Recall Preset ${preset}`,
 			style: {
-				text: `\`P${preset}\\n\${$(${MODULE_ID}:selected_timer_preset_${preset}_label) || "Preset ${preset}"}\``,
+				text: `\`P${preset}\\n\${$(${MODULE_ID}:selected_timer_preset_${preset}_time) || "Preset ${preset}"}\``,
 				size: '14',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(60, 90, 170),

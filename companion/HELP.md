@@ -24,7 +24,7 @@ The VICREO Timer app must be running for the REST API and SSE stream to be avail
 - Create timers and apply patch-style timer updates
 - Reorder timers by ID list
 - Pause all timers and reset all timers
-- Show or hide the output window
+- Show or hide the second screen
 - Update display settings including blackout and colors
 - Add log entries and clear logs
 
@@ -32,9 +32,9 @@ The VICREO Timer app must be running for the REST API and SSE stream to be avail
 
 The module publishes variables for:
 
-- Global state such as connection info, timer count, blackout, and output visibility
+- Global state such as connection info, timer count, blackout, and second screen visibility
 - The currently selected timer, sourced from the app state / SSE stream, including display value plus separate `hours`, `minutes`, and `seconds`
-- Selected countdown preset labels `1-10`
+- Selected countdown preset times `1-10`
 - Timer slots `1-20`, including timer id, title, display value, separate `hours`, `minutes`, `seconds`, running state, visibility, and related timer state
 
 ## Selection Model
@@ -49,8 +49,8 @@ Included preset categories:
 
 - `Selected Timer`: start, pause, reset, show, hide, `+1 minute`, `-1 minute`
 - `Selected Timer`: also includes recall preset `1-10` and save preset `1-10` for countdown timers
-- `Selected Timer Variables`: display-only preset for `selected_timer_value`
+- `Selected Timer Variables`: display-only presets for the current selected timer, `selected_timer_value`, `selected_timer_hours`, `selected_timer_minutes`, and `selected_timer_seconds`
 - `Selected Timer Keypad`: digits `0-9`, `Backspace`, `Enter`, `Escape`
 - `Timer Select`: select timer slots
 - `Timer Variables`: display-only presets for timer slot `1-20` `hours`, `minutes`, and `seconds`
-- `Global`: pause all, reset all, show output window, hide output window, blackout on, blackout off
+- `Global`: pause all, reset all, show second screen, hide second screen, blackout on, blackout off

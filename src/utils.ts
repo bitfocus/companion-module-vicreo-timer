@@ -58,6 +58,24 @@ export function parseTimerValueComponents(value: unknown): TimerValueComponents 
 	}
 }
 
+export function formatDurationMs(value: unknown): string {
+	if (value === '' || value === null || value === undefined) return ''
+
+	const totalMs = Number(value)
+	if (!Number.isFinite(totalMs)) return ''
+
+	const totalSeconds = Math.max(0, Math.floor(totalMs / 1000))
+	const hours = Math.floor(totalSeconds / 3600)
+	const minutes = Math.floor((totalSeconds % 3600) / 60)
+	const seconds = totalSeconds % 60
+
+	if (hours > 0) {
+		return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+	}
+
+	return `${minutes}:${String(seconds).padStart(2, '0')}`
+}
+
 export function getTimerSlotLabel(slot: number, timer?: VicreoTimer): string {
 	if (!timer) return `Slot ${slot}`
 	return `Slot ${slot}: ${timer.title || timer.id}`

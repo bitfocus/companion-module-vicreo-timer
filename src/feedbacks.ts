@@ -45,7 +45,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			callback: (feedback) => Boolean(self.getTimerBySlot(Number(feedback.options.slot))?.isRunning),
 		},
 		timer_slot_visible: {
-			name: 'Timer slot is visible on output',
+			name: 'Timer slot is visible on second screen',
 			type: 'boolean',
 			defaultStyle: {
 				bgcolor: combineRgb(0, 110, 180),
@@ -64,7 +64,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			callback: (feedback) => Boolean(self.getTimerBySlot(Number(feedback.options.slot))?.view?.showOnOutput),
 		},
 		output_window_visible: {
-			name: 'Output window is visible',
+			name: 'Second screen is visible',
 			type: 'boolean',
 			defaultStyle: {
 				bgcolor: combineRgb(90, 0, 150),

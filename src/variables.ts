@@ -1,12 +1,12 @@
 import type { ModuleInstance } from './main.js'
 import { MAX_TIMER_SLOTS, TIMER_PRESET_SLOTS } from './constants.js'
-import { boolLabel, parseTimerValueComponents, safeString } from './utils.js'
+import { boolLabel, formatDurationMs, parseTimerValueComponents, safeString } from './utils.js'
 
 export function UpdateVariableDefinitions(self: ModuleInstance): void {
 	const variables = [
 		{ variableId: 'api_port', name: 'API port' },
 		{ variableId: 'timer_count', name: 'Timer count' },
-		{ variableId: 'output_window_visible', name: 'Output window visible (YES/NO)' },
+		{ variableId: 'output_window_visible', name: 'Second screen visible (YES/NO)' },
 		{ variableId: 'blackout', name: 'Blackout enabled (YES/NO)' },
 		{ variableId: 'selected_timer_slot', name: 'Selected timer slot number' },
 		{ variableId: 'selected_timer_id', name: 'Selected timer id' },
@@ -17,13 +17,13 @@ export function UpdateVariableDefinitions(self: ModuleInstance): void {
 		{ variableId: 'selected_timer_minutes', name: 'Selected timer minutes' },
 		{ variableId: 'selected_timer_seconds', name: 'Selected timer seconds' },
 		{ variableId: 'selected_timer_running', name: 'Selected timer running (YES/NO)' },
-		{ variableId: 'selected_timer_visible', name: 'Selected timer visible on output (YES/NO)' },
+		{ variableId: 'selected_timer_visible', name: 'Selected timer visible on second screen (YES/NO)' },
 	]
 
 	for (let preset = 1; preset <= TIMER_PRESET_SLOTS; preset++) {
 		variables.push({
-			variableId: `selected_timer_preset_${preset}_label`,
-			name: `Selected timer preset ${preset} label`,
+			variableId: `selected_timer_preset_${preset}_time`,
+			name: `Selected timer preset ${preset} time`,
 		})
 	}
 
@@ -37,7 +37,7 @@ export function UpdateVariableDefinitions(self: ModuleInstance): void {
 		variables.push({ variableId: `timer_${slot}_seconds`, name: `Timer ${slot} seconds` })
 		variables.push({ variableId: `timer_${slot}_running`, name: `Timer ${slot} running (YES/NO)` })
 		variables.push({ variableId: `timer_${slot}_ended`, name: `Timer ${slot} ended (YES/NO)` })
-		variables.push({ variableId: `timer_${slot}_visible`, name: `Timer ${slot} visible on output (YES/NO)` })
+		variables.push({ variableId: `timer_${slot}_visible`, name: `Timer ${slot} visible on second screen (YES/NO)` })
 		variables.push({ variableId: `timer_${slot}_collapsed`, name: `Timer ${slot} collapsed (YES/NO)` })
 		variables.push({ variableId: `timer_${slot}_connection_state`, name: `Timer ${slot} connection state` })
 		variables.push({ variableId: `timer_${slot}_connection_message`, name: `Timer ${slot} connection message` })
@@ -72,7 +72,7 @@ export function UpdateVariableValues(self: ModuleInstance): void {
 	}
 
 	for (let preset = 1; preset <= TIMER_PRESET_SLOTS; preset++) {
-		values[`selected_timer_preset_${preset}_label`] = safeString(selected?.presets?.[preset - 1]?.label)
+		values[`selected_timer_preset_${preset}_time`] = formatDurationMs(selected?.presets?.[preset - 1]?.durationMs)
 	}
 
 	for (let slot = 1; slot <= MAX_TIMER_SLOTS; slot++) {
