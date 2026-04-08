@@ -3,9 +3,10 @@ import {
 	type CompanionButtonStepActions,
 	type CompanionOptionValues,
 	type CompanionPresetDefinitions,
+	type CompanionTextSize,
 } from '@companion-module/base'
 import type { ModuleInstance } from './main.js'
-import { MODULE_ID, PRESET_TIMER_BUTTONS } from './constants.js'
+import { MODULE_ID, PRESET_TIMER_BUTTONS, TIMER_PRESET_SLOTS } from './constants.js'
 
 function step(actionId: string, options: CompanionOptionValues): CompanionButtonStepActions[] {
 	return [
@@ -14,6 +15,28 @@ function step(actionId: string, options: CompanionOptionValues): CompanionButton
 			up: [],
 		},
 	]
+}
+
+function variablePreset(
+	category: string,
+	name: string,
+	text: string,
+	bgcolor: number,
+	size: CompanionTextSize = '18',
+): CompanionPresetDefinitions[string] {
+	return {
+		type: 'button',
+		category,
+		name,
+		style: {
+			text,
+			size,
+			color: combineRgb(255, 255, 255),
+			bgcolor,
+		},
+		steps: [],
+		feedbacks: [],
+	}
 }
 
 export function GetPresetDefinitions(_self: ModuleInstance): CompanionPresetDefinitions {
@@ -215,9 +238,15 @@ export function GetPresetDefinitions(_self: ModuleInstance): CompanionPresetDefi
 			steps: step('timer_adjust_minutes', { minutes: -1 }),
 			feedbacks: [],
 		},
+		selected_timer_value_variable: variablePreset(
+			'Selected Timer Variables',
+			'Selected Timer Value Variable',
+			`$(${MODULE_ID}:selected_timer_value)`,
+			combineRgb(60, 60, 60),
+		),
 	}
 
-	for (let preset = 1; preset <= 4; preset++) {
+	for (let preset = 1; preset <= TIMER_PRESET_SLOTS; preset++) {
 		presets[`focused_recall_preset_${preset}`] = {
 			type: 'button',
 			category: 'Selected Timer',
@@ -339,6 +368,32 @@ export function GetPresetDefinitions(_self: ModuleInstance): CompanionPresetDefi
 				},
 			],
 		}
+	}
+
+	for (let slot = 1; slot <= 20; slot++) {
+		presets[`timer_${slot}_hours_variable`] = variablePreset(
+			'Timer Variables',
+			`Timer ${slot} Hours Variable`,
+			`T${slot} H\\n$(${MODULE_ID}:timer_${slot}_hours)`,
+			combineRgb(50, 70, 120),
+			'14',
+		)
+
+		presets[`timer_${slot}_minutes_variable`] = variablePreset(
+			'Timer Variables',
+			`Timer ${slot} Minutes Variable`,
+			`T${slot} M\\n$(${MODULE_ID}:timer_${slot}_minutes)`,
+			combineRgb(50, 100, 80),
+			'14',
+		)
+
+		presets[`timer_${slot}_seconds_variable`] = variablePreset(
+			'Timer Variables',
+			`Timer ${slot} Seconds Variable`,
+			`T${slot} S\\n$(${MODULE_ID}:timer_${slot}_seconds)`,
+			combineRgb(120, 70, 40),
+			'14',
+		)
 	}
 
 	return presets

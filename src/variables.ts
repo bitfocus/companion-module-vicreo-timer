@@ -1,5 +1,5 @@
 import type { ModuleInstance } from './main.js'
-import { MAX_TIMER_SLOTS } from './constants.js'
+import { MAX_TIMER_SLOTS, TIMER_PRESET_SLOTS } from './constants.js'
 import { boolLabel, parseTimerValueComponents, safeString } from './utils.js'
 
 export function UpdateVariableDefinitions(self: ModuleInstance): void {
@@ -20,7 +20,7 @@ export function UpdateVariableDefinitions(self: ModuleInstance): void {
 		{ variableId: 'selected_timer_visible', name: 'Selected timer visible on output (YES/NO)' },
 	]
 
-	for (let preset = 1; preset <= 4; preset++) {
+	for (let preset = 1; preset <= TIMER_PRESET_SLOTS; preset++) {
 		variables.push({
 			variableId: `selected_timer_preset_${preset}_label`,
 			name: `Selected timer preset ${preset} label`,
@@ -71,7 +71,7 @@ export function UpdateVariableValues(self: ModuleInstance): void {
 		selected_timer_visible: boolLabel(Boolean(selected?.view?.showOnOutput)),
 	}
 
-	for (let preset = 1; preset <= 4; preset++) {
+	for (let preset = 1; preset <= TIMER_PRESET_SLOTS; preset++) {
 		values[`selected_timer_preset_${preset}_label`] = safeString(selected?.presets?.[preset - 1]?.label)
 	}
 

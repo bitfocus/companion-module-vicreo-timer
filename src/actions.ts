@@ -1,6 +1,6 @@
 import type { SomeCompanionActionInputField } from '@companion-module/base'
 import type { ModuleInstance } from './main.js'
-import { KEY_CHOICES, TIMER_TYPES } from './constants.js'
+import { KEY_CHOICES, TIMER_PRESET_SLOTS, TIMER_TYPES } from './constants.js'
 import { parseOptionalBoolean, parseOptionalNumber, parseOptionalString } from './utils.js'
 
 function targetOptions(self: ModuleInstance): SomeCompanionActionInputField[] {
@@ -34,6 +34,13 @@ function targetOptions(self: ModuleInstance): SomeCompanionActionInputField[] {
 			choices: timerChoices,
 		},
 	]
+}
+
+function presetSlotChoices() {
+	return Array.from({ length: TIMER_PRESET_SLOTS }, (_, index) => ({
+		id: index + 1,
+		label: `Preset ${index + 1}`,
+	}))
 }
 
 export function UpdateActions(self: ModuleInstance): void {
@@ -118,12 +125,7 @@ export function UpdateActions(self: ModuleInstance): void {
 					id: 'index',
 					label: 'Preset slot',
 					default: 1,
-					choices: [
-						{ id: 1, label: 'Preset 1' },
-						{ id: 2, label: 'Preset 2' },
-						{ id: 3, label: 'Preset 3' },
-						{ id: 4, label: 'Preset 4' },
-					],
+					choices: presetSlotChoices(),
 				},
 			],
 			callback: async (event) => {
@@ -142,12 +144,7 @@ export function UpdateActions(self: ModuleInstance): void {
 					id: 'index',
 					label: 'Preset slot',
 					default: 1,
-					choices: [
-						{ id: 1, label: 'Preset 1' },
-						{ id: 2, label: 'Preset 2' },
-						{ id: 3, label: 'Preset 3' },
-						{ id: 4, label: 'Preset 4' },
-					],
+					choices: presetSlotChoices(),
 				},
 			],
 			callback: async (event) => {
