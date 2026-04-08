@@ -33,9 +33,9 @@ The VICREO Timer app must be running for the REST API and SSE stream to be avail
 The module publishes variables for:
 
 - Global state such as connection info, timer count, blackout, and output visibility
-- The currently selected timer, sourced from the app state / SSE stream
+- The currently selected timer, sourced from the app state / SSE stream, including display value plus separate `hours`, `minutes`, and `seconds`
 - Selected countdown preset labels `1-4`
-- Timer slots `1-20`, including timer id, title, value, running state, visibility, and related timer state
+- Timer slots `1-20`, including timer id, title, display value, separate `hours`, `minutes`, `seconds`, running state, visibility, and related timer state
 
 ## Selection Model
 

@@ -1,6 +1,6 @@
 import type { ModuleInstance } from './main.js'
 import { MAX_TIMER_SLOTS } from './constants.js'
-import { boolLabel, safeString } from './utils.js'
+import { boolLabel, parseTimerValueComponents, safeString } from './utils.js'
 
 export function UpdateVariableDefinitions(self: ModuleInstance): void {
 	const variables = [
@@ -13,6 +13,9 @@ export function UpdateVariableDefinitions(self: ModuleInstance): void {
 		{ variableId: 'selected_timer_title', name: 'Selected timer title' },
 		{ variableId: 'selected_timer_type', name: 'Selected timer type' },
 		{ variableId: 'selected_timer_value', name: 'Selected timer display value' },
+		{ variableId: 'selected_timer_hours', name: 'Selected timer hours' },
+		{ variableId: 'selected_timer_minutes', name: 'Selected timer minutes' },
+		{ variableId: 'selected_timer_seconds', name: 'Selected timer seconds' },
 		{ variableId: 'selected_timer_running', name: 'Selected timer running (YES/NO)' },
 		{ variableId: 'selected_timer_visible', name: 'Selected timer visible on output (YES/NO)' },
 	]
@@ -29,6 +32,9 @@ export function UpdateVariableDefinitions(self: ModuleInstance): void {
 		variables.push({ variableId: `timer_${slot}_title`, name: `Timer ${slot} title` })
 		variables.push({ variableId: `timer_${slot}_type`, name: `Timer ${slot} type` })
 		variables.push({ variableId: `timer_${slot}_value`, name: `Timer ${slot} display value` })
+		variables.push({ variableId: `timer_${slot}_hours`, name: `Timer ${slot} hours` })
+		variables.push({ variableId: `timer_${slot}_minutes`, name: `Timer ${slot} minutes` })
+		variables.push({ variableId: `timer_${slot}_seconds`, name: `Timer ${slot} seconds` })
 		variables.push({ variableId: `timer_${slot}_running`, name: `Timer ${slot} running (YES/NO)` })
 		variables.push({ variableId: `timer_${slot}_ended`, name: `Timer ${slot} ended (YES/NO)` })
 		variables.push({ variableId: `timer_${slot}_visible`, name: `Timer ${slot} visible on output (YES/NO)` })
@@ -47,6 +53,7 @@ export function UpdateVariableValues(self: ModuleInstance): void {
 	const state = self.getApiState()
 	const selected = self.getFocusedTimer()
 	const selectedSlot = selected ? self.getTimerSlotById(selected.id) : 0
+	const selectedComponents = parseTimerValueComponents(selected?.value)
 	const values: Record<string, string | number> = {
 		api_port: state.server?.port ?? self.config.port,
 		timer_count: state.timers.length,
@@ -57,6 +64,9 @@ export function UpdateVariableValues(self: ModuleInstance): void {
 		selected_timer_title: safeString(selected?.title),
 		selected_timer_type: safeString(selected?.type),
 		selected_timer_value: safeString(selected?.value),
+		selected_timer_hours: selectedComponents.hours,
+		selected_timer_minutes: selectedComponents.minutes,
+		selected_timer_seconds: selectedComponents.seconds,
 		selected_timer_running: boolLabel(Boolean(selected?.isRunning)),
 		selected_timer_visible: boolLabel(Boolean(selected?.view?.showOnOutput)),
 	}
@@ -67,10 +77,14 @@ export function UpdateVariableValues(self: ModuleInstance): void {
 
 	for (let slot = 1; slot <= MAX_TIMER_SLOTS; slot++) {
 		const timer = state.timers[slot - 1]
+		const components = parseTimerValueComponents(timer?.value)
 		values[`timer_${slot}_id`] = safeString(timer?.id)
 		values[`timer_${slot}_title`] = safeString(timer?.title)
 		values[`timer_${slot}_type`] = safeString(timer?.type)
 		values[`timer_${slot}_value`] = safeString(timer?.value)
+		values[`timer_${slot}_hours`] = components.hours
+		values[`timer_${slot}_minutes`] = components.minutes
+		values[`timer_${slot}_seconds`] = components.seconds
 		values[`timer_${slot}_running`] = boolLabel(Boolean(timer?.isRunning))
 		values[`timer_${slot}_ended`] = boolLabel(Boolean(timer?.ended))
 		values[`timer_${slot}_visible`] = boolLabel(Boolean(timer?.view?.showOnOutput))

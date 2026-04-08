@@ -30,6 +30,34 @@ export function parseOptionalBoolean(value: unknown): boolean | undefined {
 	return undefined
 }
 
+export interface TimerValueComponents {
+	hours: string
+	minutes: string
+	seconds: string
+}
+
+export function parseTimerValueComponents(value: unknown): TimerValueComponents {
+	const raw = safeString(value).trim()
+	if (!raw) return { hours: '', minutes: '', seconds: '' }
+
+	const match = raw.match(/^[+-]?(\d+):(\d+)(?::(\d+))?(?:\.\d+)?$/)
+	if (!match) return { hours: '', minutes: '', seconds: '' }
+
+	if (match[3] !== undefined) {
+		return {
+			hours: match[1],
+			minutes: match[2],
+			seconds: match[3],
+		}
+	}
+
+	return {
+		hours: '0',
+		minutes: match[1],
+		seconds: match[2],
+	}
+}
+
 export function getTimerSlotLabel(slot: number, timer?: VicreoTimer): string {
 	if (!timer) return `Slot ${slot}`
 	return `Slot ${slot}: ${timer.title || timer.id}`
